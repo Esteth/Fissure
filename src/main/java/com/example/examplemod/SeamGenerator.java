@@ -13,13 +13,16 @@ import java.util.Random;
  */
 public class SeamGenerator implements IWorldGenerator {
 
-  private int height = -1;
-
   @Override
   public void generate(Random random, int chunkX, int chunkZ, World world, IChunkProvider chunkGenerator, IChunkProvider chunkProvider) {
-    if (height < 0) {
-      height = world.getTopSolidOrLiquidBlock(new BlockPos(chunkX * 16, 0, chunkZ * 16)).add(0, 20, 0).getY();
+    if (random.nextInt(16) != 0) {
+      return;
     }
+
+    int heightAboveGround = random.nextInt(10) + 15;
+    int height =
+        world.getTopSolidOrLiquidBlock(
+            new BlockPos(chunkX * 16, 0, chunkZ * 16)).add(0, heightAboveGround, 0).getY();
 
     int xCoord = chunkX * 16;
     int zCoord = chunkZ * 16;
